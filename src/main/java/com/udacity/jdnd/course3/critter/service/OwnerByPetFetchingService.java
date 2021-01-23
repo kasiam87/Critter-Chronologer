@@ -9,13 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class AllCustomerFetchingService {
+public class OwnerByPetFetchingService {
 
     @Autowired
     private CustomerRepository customerRepository;
 
     @Transactional
-    public List<Customer> apply() {
-        return (List<Customer>) customerRepository.findAll();
+    public Customer apply(long id) {
+        return customerRepository.findByPetId(id);
     }
 }

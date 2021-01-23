@@ -12,7 +12,7 @@ import java.util.Optional;
 public class EmployeeFetchingService {
 
     @Autowired
-    EmployeeRepository employeeRepository;
+    private EmployeeRepository employeeRepository;
 
     @Transactional
     public Optional<Employee> apply(Long id) {

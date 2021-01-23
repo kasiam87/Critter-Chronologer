@@ -12,7 +12,7 @@ import java.util.function.Function;
 public class EmployeeCreatingService implements Function<Employee, Employee> {
 
     @Autowired
-    EmployeeRepository employeeRepository;
+    private EmployeeRepository employeeRepository;
 
     @Override
     @Transactional

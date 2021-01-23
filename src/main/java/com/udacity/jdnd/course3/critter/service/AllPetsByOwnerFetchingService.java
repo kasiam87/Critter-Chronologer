@@ -12,7 +12,7 @@ import java.util.List;
 public class AllPetsByOwnerFetchingService {
 
     @Autowired
-    PetRepository petRepository;
+    private PetRepository petRepository;
 
     @Transactional
     public List<Pet> apply(Long ownerId) {

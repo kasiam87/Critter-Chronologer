@@ -7,6 +7,7 @@ import com.udacity.jdnd.course3.critter.service.CustomerCreatingService;
 import com.udacity.jdnd.course3.critter.service.EmployeeCreatingService;
 import com.udacity.jdnd.course3.critter.service.EmployeeFetchingService;
 import com.udacity.jdnd.course3.critter.service.EmployeeNotFoundException;
+import com.udacity.jdnd.course3.critter.service.OwnerByPetFetchingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,22 +27,25 @@ import java.util.stream.Collectors;
 public class UserController {
 
     @Autowired
-    CustomerCreatingService customerCreatingService;
+    private CustomerCreatingService customerCreatingService;
 
     @Autowired
-    AllCustomerFetchingService allCustomerFetchingService;
+    private AllCustomerFetchingService allCustomerFetchingService;
 
     @Autowired
-    EmployeeCreatingService employeeCreatingService;
+    private EmployeeCreatingService employeeCreatingService;
 
     @Autowired
-    EmployeeFetchingService employeeFetchingService;
+    private EmployeeFetchingService employeeFetchingService;
 
     @Autowired
-    CustomerConverter customerConverter;
+    private OwnerByPetFetchingService ownerByPetFetchingService;
 
     @Autowired
-    EmployeeConverter employeeConverter;
+    private CustomerConverter customerConverter;
+
+    @Autowired
+    private EmployeeConverter employeeConverter;
 
     @PostMapping("/customer")
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO){
@@ -57,7 +61,8 @@ public class UserController {
 
     @GetMapping("/customer/pet/{petId}")
     public CustomerDTO getOwnerByPet(@PathVariable long petId){
-        throw new UnsupportedOperationException();
+        Customer customer = ownerByPetFetchingService.apply(petId);
+        return customerConverter.fromDomain(customer);
     }
 
     @PostMapping("/employee")
