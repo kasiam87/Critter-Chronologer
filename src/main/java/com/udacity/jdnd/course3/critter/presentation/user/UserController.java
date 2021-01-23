@@ -7,6 +7,7 @@ import com.udacity.jdnd.course3.critter.service.CustomerCreatingService;
 import com.udacity.jdnd.course3.critter.service.EmployeeAvailabilitySettingService;
 import com.udacity.jdnd.course3.critter.service.EmployeeCreatingService;
 import com.udacity.jdnd.course3.critter.service.EmployeeFetchingService;
+import com.udacity.jdnd.course3.critter.service.EmployeeForServiceFetchingService;
 import com.udacity.jdnd.course3.critter.service.EmployeeNotFoundException;
 import com.udacity.jdnd.course3.critter.service.OwnerByPetFetchingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,9 @@ public class UserController {
 
     @Autowired
     private EmployeeAvailabilitySettingService employeeAvailabilitySettingService;
+
+    @Autowired
+    private EmployeeForServiceFetchingService employeeForServiceFetchingService;
 
     @Autowired
     private CustomerConverter customerConverter;
@@ -90,7 +94,10 @@ public class UserController {
 
     @GetMapping("/employee/availability")
     public List<EmployeeDTO> findEmployeesForService(@RequestBody EmployeeRequestDTO employeeDTO) {
-        throw new UnsupportedOperationException();
+        return employeeForServiceFetchingService.invoke(employeeDTO.getDate(), employeeDTO.getSkills())
+                .stream()
+                .map(employee -> employeeConverter.fromDomain(employee))
+                .collect(Collectors.toList());
     }
 
 }
