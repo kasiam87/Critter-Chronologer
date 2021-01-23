@@ -1,0 +1,6 @@
+.DS_Store
+.idea/
+critter.iml
+src/.DS_Store
+src/main/.DS_Store
+target/
