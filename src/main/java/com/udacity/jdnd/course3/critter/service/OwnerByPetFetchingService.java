@@ -15,7 +15,7 @@ public class OwnerByPetFetchingService {
     private CustomerRepository customerRepository;
 
     @Transactional
-    public Customer apply(long id) {
+    public Customer invoke(long id) {
         return customerRepository.findByPetId(id);
     }
 }

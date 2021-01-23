@@ -15,7 +15,7 @@ public class AllPetsByOwnerFetchingService {
     private PetRepository petRepository;
 
     @Transactional
-    public List<Pet> apply(Long ownerId) {
+    public List<Pet> invoke(Long ownerId) {
         return petRepository.findAllByOwnerId(ownerId);
     }
 }

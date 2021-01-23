@@ -9,14 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.function.Function;
 
 @Service
-public class EmployeeCreatingService implements Function<Employee, Employee> {
+public class EmployeeCreatingService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    @Override
     @Transactional
-    public Employee apply(Employee employee) {
+    public Employee invoke(Employee employee) {
         return employeeRepository.save(employee);
     }
 }

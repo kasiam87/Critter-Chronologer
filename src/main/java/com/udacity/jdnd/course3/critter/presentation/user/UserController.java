@@ -4,6 +4,7 @@ import com.udacity.jdnd.course3.critter.persistence.Customer;
 import com.udacity.jdnd.course3.critter.persistence.Employee;
 import com.udacity.jdnd.course3.critter.service.AllCustomerFetchingService;
 import com.udacity.jdnd.course3.critter.service.CustomerCreatingService;
+import com.udacity.jdnd.course3.critter.service.EmployeeAvailabilitySettingService;
 import com.udacity.jdnd.course3.critter.service.EmployeeCreatingService;
 import com.udacity.jdnd.course3.critter.service.EmployeeFetchingService;
 import com.udacity.jdnd.course3.critter.service.EmployeeNotFoundException;
@@ -42,6 +43,9 @@ public class UserController {
     private OwnerByPetFetchingService ownerByPetFetchingService;
 
     @Autowired
+    private EmployeeAvailabilitySettingService employeeAvailabilitySettingService;
+
+    @Autowired
     private CustomerConverter customerConverter;
 
     @Autowired
@@ -50,38 +54,38 @@ public class UserController {
     @PostMapping("/customer")
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO){
         Customer customer = customerConverter.toDomain(customerDTO);
-        Customer savedCustomer = customerCreatingService.apply(customer);
+        Customer savedCustomer = customerCreatingService.invoke(customer);
         return customerConverter.fromDomain(savedCustomer);
     }
 
     @GetMapping("/customer")
     public List<CustomerDTO> getAllCustomers(){
-        return allCustomerFetchingService.apply().stream().map(c -> customerConverter.fromDomain(c)).collect(Collectors.toList());
+        return allCustomerFetchingService.invoke().stream().map(c -> customerConverter.fromDomain(c)).collect(Collectors.toList());
     }
 
     @GetMapping("/customer/pet/{petId}")
     public CustomerDTO getOwnerByPet(@PathVariable long petId){
-        Customer customer = ownerByPetFetchingService.apply(petId);
+        Customer customer = ownerByPetFetchingService.invoke(petId);
         return customerConverter.fromDomain(customer);
     }
 
     @PostMapping("/employee")
     public EmployeeDTO saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
         Employee employee = employeeConverter.toDomain(employeeDTO);
-        Employee savedEmployee = employeeCreatingService.apply(employee);
+        Employee savedEmployee = employeeCreatingService.invoke(employee);
         return employeeConverter.fromDomain(savedEmployee);
     }
 
     @PostMapping("/employee/{employeeId}")
     public EmployeeDTO getEmployee(@PathVariable long employeeId) {
-        Employee employee = employeeFetchingService.apply(employeeId)
+        Employee employee = employeeFetchingService.invoke(employeeId)
                 .orElseThrow(() -> new EmployeeNotFoundException(employeeId));
         return employeeConverter.fromDomain(employee);
     }
 
     @PutMapping("/employee/{employeeId}")
     public void setAvailability(@RequestBody Set<DayOfWeek> daysAvailable, @PathVariable long employeeId) {
-        throw new UnsupportedOperationException();
+        employeeAvailabilitySettingService.invoke(daysAvailable, employeeId);
     }
 
     @GetMapping("/employee/availability")

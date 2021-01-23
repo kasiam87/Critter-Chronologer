@@ -1,7 +1,6 @@
 package com.udacity.jdnd.course3.critter.presentation.pet;
 
 import com.udacity.jdnd.course3.critter.persistence.Pet;
-import com.udacity.jdnd.course3.critter.persistence.PetRepository;
 import com.udacity.jdnd.course3.critter.service.AllPetsByOwnerFetchingService;
 import com.udacity.jdnd.course3.critter.service.PetCreatingService;
 import com.udacity.jdnd.course3.critter.service.PetFetchingService;
@@ -34,13 +33,13 @@ public class PetController {
     @PostMapping
     public PetDTO savePet(@RequestBody PetDTO petDTO) {
         Pet pet = petConverter.toDomain(petDTO);
-        Pet newPet = petCreatingService.apply(pet);
+        Pet newPet = petCreatingService.invoke(pet);
         return petConverter.fromDomain(newPet);
     }
 
     @GetMapping("/{petId}")
     public PetDTO getPet(@PathVariable long petId) {
-        Pet pet = petFetchingService.apply(petId)
+        Pet pet = petFetchingService.invoke(petId)
                 .orElseThrow(() -> new PetNotFoundException(petId));
         return petConverter.fromDomain(pet);
     }
@@ -52,7 +51,7 @@ public class PetController {
 
     @GetMapping("/owner/{ownerId}")
     public List<PetDTO> getPetsByOwner(@PathVariable long ownerId) {
-        List<Pet> retrievedPets = allPetsByOwnerFetchingService.apply(ownerId);
+        List<Pet> retrievedPets = allPetsByOwnerFetchingService.invoke(ownerId);
         return retrievedPets.stream()
                 .map(pet -> petConverter.fromDomain(pet))
                 .collect(Collectors.toList());

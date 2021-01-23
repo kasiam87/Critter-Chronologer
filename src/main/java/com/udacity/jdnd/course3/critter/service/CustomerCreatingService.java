@@ -6,17 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.function.Function;
-
 @Service
-public class CustomerCreatingService implements Function<Customer, Customer> {
+public class CustomerCreatingService {
 
     @Autowired
     private CustomerRepository customerRepository;
 
-    @Override
     @Transactional
-    public Customer apply(Customer customer) {
+    public Customer invoke(Customer customer) {
         return customerRepository.save(customer);
     }
 }

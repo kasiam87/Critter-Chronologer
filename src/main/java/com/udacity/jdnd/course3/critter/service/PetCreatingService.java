@@ -7,19 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.function.Function;
-
 @Service
-public class PetCreatingService implements Function<Pet, Pet> {
+public class PetCreatingService {
 
     @Autowired
     private PetRepository petRepository;
     @Autowired
     private CustomerRepository customerRepository;
 
-    @Override
     @Transactional
-    public Pet apply(Pet pet) {
+    public Pet invoke(Pet pet) {
         return customerRepository.findById(pet.getOwnerId())
                 .map(customer -> {
                     Pet savedPet = petRepository.save(pet);

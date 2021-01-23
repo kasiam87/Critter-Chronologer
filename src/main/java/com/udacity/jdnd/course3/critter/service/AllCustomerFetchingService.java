@@ -15,7 +15,7 @@ public class AllCustomerFetchingService {
     private CustomerRepository customerRepository;
 
     @Transactional
-    public List<Customer> apply() {
+    public List<Customer> invoke() {
         return (List<Customer>) customerRepository.findAll();
     }
 }

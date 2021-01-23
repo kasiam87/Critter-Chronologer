@@ -6,16 +6,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import java.time.DayOfWeek;
+import java.util.Set;
 
 @Service
-public class EmployeeFetchingService {
+public class EmployeeAvailabilitySettingService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
 
     @Transactional
-    public Optional<Employee> invoke(Long id) {
-        return employeeRepository.findById(id);
+    public Employee invoke(Set<DayOfWeek> daysAvailable, long employeeId) {
+        Employee employee = employeeRepository
+                .findById(employeeId)
+                .orElseThrow(() -> new EmployeeNotFoundException(employeeId));
+        employee.setDaysAvailable(daysAvailable);
+        return employee;
     }
 }

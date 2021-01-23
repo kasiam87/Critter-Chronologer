@@ -15,7 +15,7 @@ public class PetFetchingService {
     PetRepository petRepository;
 
     @Transactional
-    public Optional<Pet> apply(Long id) {
+    public Optional<Pet> invoke(Long id) {
         return petRepository.findById(id);
     }
 }
