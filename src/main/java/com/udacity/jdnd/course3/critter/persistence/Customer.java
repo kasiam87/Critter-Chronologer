@@ -1,11 +1,14 @@
 package com.udacity.jdnd.course3.critter.persistence;
 
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -23,7 +26,7 @@ public class Customer {
     @JoinTable(name = "customer_pets",
             joinColumns = { @JoinColumn(name = "customer_id")},
             inverseJoinColumns = { @JoinColumn(name = "pet_id")})
-    private Set<Pet> pets;
+    private Set<Pet> pets = new HashSet<>();
 
     public Long getId() {
         return id;

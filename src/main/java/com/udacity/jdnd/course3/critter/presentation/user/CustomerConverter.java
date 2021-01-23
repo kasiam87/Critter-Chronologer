@@ -31,7 +31,7 @@ public class CustomerConverter {
         customerDTO.setName(customer.getName());
         customerDTO.setNotes(customer.getNotes());
         customerDTO.setPhoneNumber(customer.getPhoneNumber());
-        if (customerDTO.getPetIds() != null) {
+        if (customer.getPets() != null) {
             customerDTO.setPetIds(
                     customer.getPets()
                             .stream()

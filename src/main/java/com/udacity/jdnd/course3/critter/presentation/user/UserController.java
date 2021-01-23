@@ -70,7 +70,7 @@ public class UserController {
     @PostMapping("/employee/{employeeId}")
     public EmployeeDTO getEmployee(@PathVariable long employeeId) {
         Employee employee = employeeFetchingService.apply(employeeId)
-                .orElseThrow(() -> new EmployeeNotFoundException("Could not find employee with id " + employeeId));
+                .orElseThrow(() -> new EmployeeNotFoundException(employeeId));
         return employeeConverter.fromDomain(employee);
     }
 
