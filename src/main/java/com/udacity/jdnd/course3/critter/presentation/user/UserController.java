@@ -1,8 +1,12 @@
 package com.udacity.jdnd.course3.critter.presentation.user;
 
 import com.udacity.jdnd.course3.critter.persistence.Customer;
+import com.udacity.jdnd.course3.critter.persistence.Employee;
 import com.udacity.jdnd.course3.critter.service.AllCustomerFetchingService;
 import com.udacity.jdnd.course3.critter.service.CustomerCreatingService;
+import com.udacity.jdnd.course3.critter.service.EmployeeCreatingService;
+import com.udacity.jdnd.course3.critter.service.EmployeeFetchingService;
+import com.udacity.jdnd.course3.critter.service.EmployeeNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,7 +32,16 @@ public class UserController {
     AllCustomerFetchingService allCustomerFetchingService;
 
     @Autowired
+    EmployeeCreatingService employeeCreatingService;
+
+    @Autowired
+    EmployeeFetchingService employeeFetchingService;
+
+    @Autowired
     CustomerConverter customerConverter;
+
+    @Autowired
+    EmployeeConverter employeeConverter;
 
     @PostMapping("/customer")
     public CustomerDTO saveCustomer(@RequestBody CustomerDTO customerDTO){
@@ -49,12 +62,16 @@ public class UserController {
 
     @PostMapping("/employee")
     public EmployeeDTO saveEmployee(@RequestBody EmployeeDTO employeeDTO) {
-        throw new UnsupportedOperationException();
+        Employee employee = employeeConverter.toDomain(employeeDTO);
+        Employee savedEmployee = employeeCreatingService.apply(employee);
+        return employeeConverter.fromDomain(savedEmployee);
     }
 
     @PostMapping("/employee/{employeeId}")
     public EmployeeDTO getEmployee(@PathVariable long employeeId) {
-        throw new UnsupportedOperationException();
+        Employee employee = employeeFetchingService.apply(employeeId)
+                .orElseThrow(() -> new EmployeeNotFoundException("Could not find employee with id " + employeeId));
+        return employeeConverter.fromDomain(employee);
     }
 
     @PutMapping("/employee/{employeeId}")
