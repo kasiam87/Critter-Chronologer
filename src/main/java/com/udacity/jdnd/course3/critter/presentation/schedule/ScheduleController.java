@@ -3,6 +3,7 @@ package com.udacity.jdnd.course3.critter.presentation.schedule;
 import com.udacity.jdnd.course3.critter.persistence.Schedule;
 import com.udacity.jdnd.course3.critter.service.AllSchedulesFetchingService;
 import com.udacity.jdnd.course3.critter.service.ScheduleCreatingService;
+import com.udacity.jdnd.course3.critter.service.SchedulesByCustomerFetchingService;
 import com.udacity.jdnd.course3.critter.service.SchedulesByEmployeeFetchingService;
 import com.udacity.jdnd.course3.critter.service.SchedulesByPetFetchingService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ public class ScheduleController {
 
     @Autowired
     SchedulesByPetFetchingService schedulesByPetFetchingService;
+
+    @Autowired
+    SchedulesByCustomerFetchingService schedulesByCustomerFetchingService;
 
     @Autowired
     ScheduleConverter scheduleConverter;
@@ -63,6 +67,9 @@ public class ScheduleController {
 
     @GetMapping("/customer/{customerId}")
     public List<ScheduleDTO> getScheduleForCustomer(@PathVariable long customerId) {
-        throw new UnsupportedOperationException();
+        return schedulesByCustomerFetchingService.invoke(customerId)
+                .stream()
+                .map(s -> scheduleConverter.fromDomain(s))
+                .collect(Collectors.toList());
     }
 }

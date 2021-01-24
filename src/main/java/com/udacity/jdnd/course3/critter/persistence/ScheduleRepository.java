@@ -13,4 +13,7 @@ public interface ScheduleRepository extends CrudRepository<Schedule, Long> {
 
     @Query("SELECT s FROM Schedule s LEFT JOIN s.pets p WHERE p.id = :petId")
     Set<Schedule> findAllByPetId(@Param("petId") long petId);
+
+    @Query("SELECT s FROM Schedule s LEFT JOIN s.pets p WHERE p.ownerId = :customerId")
+    Set<Schedule> findAllByCustomerId(@Param("customerId") long customerId);
 }
