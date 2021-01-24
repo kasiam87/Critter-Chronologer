@@ -1,8 +1,13 @@
 package com.udacity.jdnd.course3.critter.presentation.schedule;
 
+import com.udacity.jdnd.course3.critter.persistence.Schedule;
+import com.udacity.jdnd.course3.critter.service.AllSchedulesFetchingService;
+import com.udacity.jdnd.course3.critter.service.ScheduleCreatingService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Handles web requests related to Schedules.
@@ -11,14 +16,25 @@ import java.util.List;
 @RequestMapping("/schedule")
 public class ScheduleController {
 
+    @Autowired
+    ScheduleCreatingService scheduleCreatingService;
+
+    @Autowired
+    AllSchedulesFetchingService allSchedulesFetchingService;
+
+    @Autowired
+    ScheduleConverter scheduleConverter;
+
     @PostMapping
     public ScheduleDTO createSchedule(@RequestBody ScheduleDTO scheduleDTO) {
-        throw new UnsupportedOperationException();
+        Schedule schedule = scheduleConverter.toDomain(scheduleDTO);
+        Schedule newSchedule = scheduleCreatingService.invoke(schedule);
+        return scheduleConverter.fromDomain(newSchedule);
     }
 
     @GetMapping
     public List<ScheduleDTO> getAllSchedules() {
-        throw new UnsupportedOperationException();
+        return allSchedulesFetchingService.invoke().stream().map(s -> scheduleConverter.fromDomain(s)).collect(Collectors.toList());
     }
 
     @GetMapping("/pet/{petId}")
