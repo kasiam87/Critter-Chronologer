@@ -8,6 +8,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import java.time.LocalDate;
 import java.util.List;
@@ -20,11 +21,11 @@ public class Schedule {
     @GeneratedValue
     private Long id;
 
-    @OneToMany
-    private List<Employee> employees;
+    @ManyToMany
+    private Set<Employee> employees;
 
-    @OneToMany
-    private List<Pet> pets;
+    @ManyToMany
+    private Set<Pet> pets;
 
     private LocalDate date;
 
@@ -32,19 +33,19 @@ public class Schedule {
     @Enumerated(EnumType.STRING)
     private Set<EmployeeSkill> activities;
 
-    public List<Employee> getEmployees() {
+    public Set<Employee> getEmployees() {
         return employees;
     }
 
-    public void setEmployeeIds(List<Employee> employees) {
+    public void setEmployeeIds(Set<Employee> employees) {
         this.employees = employees;
     }
 
-    public List<Pet> getPets() {
+    public Set<Pet> getPets() {
         return pets;
     }
 
-    public void setPetIds(List<Pet> pets) {
+    public void setPetIds(Set<Pet> pets) {
         this.pets = pets;
     }
 

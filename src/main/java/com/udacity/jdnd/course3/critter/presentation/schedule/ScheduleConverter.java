@@ -20,7 +20,7 @@ public class ScheduleConverter {
                 Employee employee = new Employee();
                 employee.setId(id);
                 return employee;
-            }).collect(Collectors.toList()));
+            }).collect(Collectors.toSet()));
         }
 
         if (scheduleDTO.getPetIds() != null) {
@@ -28,7 +28,7 @@ public class ScheduleConverter {
                 Pet pet = new Pet();
                 pet.setId(id);
                 return pet;
-            }).collect(Collectors.toList()));
+            }).collect(Collectors.toSet()));
         }
         return schedule;
     }

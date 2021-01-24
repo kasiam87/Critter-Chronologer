@@ -199,10 +199,15 @@ public class CritterFunctionalTest {
 
     @Test
     public void testFindScheduleByEntities() {
+
+        System.out.println("-------------------------------- createing schedule 1\n");
         ScheduleDTO sched1 = populateSchedule(1, 2, LocalDate.of(2019, 12, 25), Sets.newHashSet(EmployeeSkill.FEEDING, EmployeeSkill.WALKING));
+
+        System.out.println("-------------------------------- createing schedule 2\n");
         ScheduleDTO sched2 = populateSchedule(3, 1, LocalDate.of(2019, 12, 26), Sets.newHashSet(EmployeeSkill.PETTING));
 
         //add a third schedule that shares some employees and pets with the other schedules
+        System.out.println("-------------------------------- createing schedule 3\n");
         ScheduleDTO sched3 = new ScheduleDTO();
         sched3.setEmployeeIds(sched1.getEmployeeIds());
         sched3.setPetIds(sched2.getPetIds());
@@ -216,7 +221,7 @@ public class CritterFunctionalTest {
             schedule 1, we should get both the first and third schedule as our result.
          */
 
-        //Employee 1 in is both schedule 1 and 3
+        //Employee 1 is in both schedule 1 and 3
         List<ScheduleDTO> scheds1e = scheduleController.getScheduleForEmployee(sched1.getEmployeeIds().get(0));
         compareSchedules(sched1, scheds1e.get(0));
         compareSchedules(sched3, scheds1e.get(1));

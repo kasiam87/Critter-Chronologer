@@ -6,6 +6,6 @@ import org.springframework.data.repository.query.Param;
 
 public interface CustomerRepository extends CrudRepository<Customer, Long> {
 
-    @Query("SELECT DISTINCT c FROM Customer c LEFT JOIN c.pets p ON p.id = :petId")
+    @Query("SELECT DISTINCT c FROM Customer c LEFT JOIN c.pets p WHERE p.id = :petId")
     Customer findByPetId(@Param("petId") long id);
 }

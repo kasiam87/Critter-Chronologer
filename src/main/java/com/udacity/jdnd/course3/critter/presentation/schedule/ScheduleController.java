@@ -3,6 +3,8 @@ package com.udacity.jdnd.course3.critter.presentation.schedule;
 import com.udacity.jdnd.course3.critter.persistence.Schedule;
 import com.udacity.jdnd.course3.critter.service.AllSchedulesFetchingService;
 import com.udacity.jdnd.course3.critter.service.ScheduleCreatingService;
+import com.udacity.jdnd.course3.critter.service.SchedulesByEmployeeFetchingService;
+import com.udacity.jdnd.course3.critter.service.SchedulesByPetFetchingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +25,12 @@ public class ScheduleController {
     AllSchedulesFetchingService allSchedulesFetchingService;
 
     @Autowired
+    SchedulesByEmployeeFetchingService schedulesByEmployeeFetchingService;
+
+    @Autowired
+    SchedulesByPetFetchingService schedulesByPetFetchingService;
+
+    @Autowired
     ScheduleConverter scheduleConverter;
 
     @PostMapping
@@ -39,12 +47,18 @@ public class ScheduleController {
 
     @GetMapping("/pet/{petId}")
     public List<ScheduleDTO> getScheduleForPet(@PathVariable long petId) {
-        throw new UnsupportedOperationException();
+        return schedulesByPetFetchingService.invoke(petId)
+                .stream()
+                .map(s -> scheduleConverter.fromDomain(s))
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/employee/{employeeId}")
     public List<ScheduleDTO> getScheduleForEmployee(@PathVariable long employeeId) {
-        throw new UnsupportedOperationException();
+        return schedulesByEmployeeFetchingService.invoke(employeeId)
+                .stream()
+                .map(s -> scheduleConverter.fromDomain(s))
+                .collect(Collectors.toList());
     }
 
     @GetMapping("/customer/{customerId}")
