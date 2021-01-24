@@ -2,6 +2,7 @@ package com.udacity.jdnd.course3.critter.presentation.pet;
 
 import com.udacity.jdnd.course3.critter.persistence.Pet;
 import com.udacity.jdnd.course3.critter.service.AllPetsByOwnerFetchingService;
+import com.udacity.jdnd.course3.critter.service.AllPetsFetchingService;
 import com.udacity.jdnd.course3.critter.service.PetCreatingService;
 import com.udacity.jdnd.course3.critter.service.PetFetchingService;
 import com.udacity.jdnd.course3.critter.service.PetNotFoundException;
@@ -28,6 +29,9 @@ public class PetController {
     AllPetsByOwnerFetchingService allPetsByOwnerFetchingService;
 
     @Autowired
+    AllPetsFetchingService allPetsFetchingService;
+
+    @Autowired
     PetConverter petConverter;
 
     @PostMapping
@@ -46,7 +50,7 @@ public class PetController {
 
     @GetMapping
     public List<PetDTO> getPets(){
-        throw new UnsupportedOperationException();
+        return allPetsFetchingService.invoke().stream().map(c -> petConverter.fromDomain(c)).collect(Collectors.toList());
     }
 
     @GetMapping("/owner/{ownerId}")

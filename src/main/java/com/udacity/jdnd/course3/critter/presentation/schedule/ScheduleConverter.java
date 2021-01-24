@@ -12,6 +12,7 @@ public class ScheduleConverter {
 
     public Schedule toDomain(ScheduleDTO scheduleDTO){
         Schedule schedule = new Schedule();
+        schedule.setId(scheduleDTO.getId());
         schedule.setDate(scheduleDTO.getDate());
         schedule.setActivities(scheduleDTO.getActivities());
 
@@ -35,6 +36,7 @@ public class ScheduleConverter {
 
     public ScheduleDTO fromDomain(Schedule schedule){
         ScheduleDTO scheduleDTO = new ScheduleDTO();
+        scheduleDTO.setId(schedule.getId());
         scheduleDTO.setDate(schedule.getDate());
         scheduleDTO.setActivities(schedule.getActivities());
         scheduleDTO.setEmployeeIds(schedule.getEmployees()
