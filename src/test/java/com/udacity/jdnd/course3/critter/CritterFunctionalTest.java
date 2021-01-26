@@ -200,14 +200,10 @@ public class CritterFunctionalTest {
     @Test
     public void testFindScheduleByEntities() {
 
-        System.out.println("-------------------------------- createing schedule 1\n");
         ScheduleDTO sched1 = populateSchedule(1, 2, LocalDate.of(2019, 12, 25), Sets.newHashSet(EmployeeSkill.FEEDING, EmployeeSkill.WALKING));
-
-        System.out.println("-------------------------------- createing schedule 2\n");
         ScheduleDTO sched2 = populateSchedule(3, 1, LocalDate.of(2019, 12, 26), Sets.newHashSet(EmployeeSkill.PETTING));
 
         //add a third schedule that shares some employees and pets with the other schedules
-        System.out.println("-------------------------------- createing schedule 3\n");
         ScheduleDTO sched3 = new ScheduleDTO();
         sched3.setEmployeeIds(sched1.getEmployeeIds());
         sched3.setPetIds(sched2.getPetIds());

@@ -8,7 +8,6 @@ import com.udacity.jdnd.course3.critter.service.EmployeeAvailabilitySettingServi
 import com.udacity.jdnd.course3.critter.service.EmployeeCreatingService;
 import com.udacity.jdnd.course3.critter.service.EmployeeFetchingService;
 import com.udacity.jdnd.course3.critter.service.EmployeeForServiceFetchingService;
-import com.udacity.jdnd.course3.critter.service.EmployeeNotFoundException;
 import com.udacity.jdnd.course3.critter.service.OwnerByPetFetchingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -64,7 +63,8 @@ public class UserController {
 
     @GetMapping("/customer")
     public List<CustomerDTO> getAllCustomers(){
-        return allCustomerFetchingService.invoke().stream().map(c -> customerConverter.fromDomain(c)).collect(Collectors.toList());
+        return allCustomerFetchingService.invoke().stream()
+                .map(c -> customerConverter.fromDomain(c)).collect(Collectors.toList());
     }
 
     @GetMapping("/customer/pet/{petId}")
@@ -82,8 +82,7 @@ public class UserController {
 
     @PostMapping("/employee/{employeeId}")
     public EmployeeDTO getEmployee(@PathVariable long employeeId) {
-        Employee employee = employeeFetchingService.invoke(employeeId)
-                .orElseThrow(() -> new EmployeeNotFoundException(employeeId));
+        Employee employee = employeeFetchingService.invoke(employeeId);
         return employeeConverter.fromDomain(employee);
     }
 

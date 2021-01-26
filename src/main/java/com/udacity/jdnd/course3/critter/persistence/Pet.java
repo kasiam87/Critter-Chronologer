@@ -4,6 +4,7 @@ import com.udacity.jdnd.course3.critter.presentation.pet.PetType;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -12,7 +13,7 @@ import java.util.Objects;
 public class Pet {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private PetType type;

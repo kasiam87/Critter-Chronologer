@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
-
 @Service
 public class PetFetchingService {
 
@@ -15,7 +13,8 @@ public class PetFetchingService {
     PetRepository petRepository;
 
     @Transactional
-    public Optional<Pet> invoke(Long id) {
-        return petRepository.findById(id);
+    public Pet invoke(Long id) {
+        return petRepository.findById(id)
+                .orElseThrow(() -> new PetNotFoundException(id));
     }
 }

@@ -5,7 +5,6 @@ import com.udacity.jdnd.course3.critter.service.AllPetsByOwnerFetchingService;
 import com.udacity.jdnd.course3.critter.service.AllPetsFetchingService;
 import com.udacity.jdnd.course3.critter.service.PetCreatingService;
 import com.udacity.jdnd.course3.critter.service.PetFetchingService;
-import com.udacity.jdnd.course3.critter.service.PetNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,14 +42,14 @@ public class PetController {
 
     @GetMapping("/{petId}")
     public PetDTO getPet(@PathVariable long petId) {
-        Pet pet = petFetchingService.invoke(petId)
-                .orElseThrow(() -> new PetNotFoundException(petId));
+        Pet pet = petFetchingService.invoke(petId);
         return petConverter.fromDomain(pet);
     }
 
     @GetMapping
     public List<PetDTO> getPets(){
-        return allPetsFetchingService.invoke().stream().map(c -> petConverter.fromDomain(c)).collect(Collectors.toList());
+        return allPetsFetchingService.invoke().stream()
+                .map(c -> petConverter.fromDomain(c)).collect(Collectors.toList());
     }
 
     @GetMapping("/owner/{ownerId}")
