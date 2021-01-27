@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "0a63de5f-e2e7-4a94-818b-e3d56a728b82",
+		"_postman_id": "4c385c65-50c7-4873-863e-d815abf2af9b",
 		"name": "Udacity",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -19,7 +19,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"name\": \"Alex\",\r\n  \"phoneNumber\": \"1234567890\"\r\n}",
+					"raw": "{\r\n  \"name\": \"Alex\",\r\n  \"phoneNumber\": \"1234567890\",\r\n  \"notes\": \"some notes\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
