@@ -80,7 +80,7 @@ public class UserController {
         return employeeConverter.fromDomain(savedEmployee);
     }
 
-    @PostMapping("/employee/{employeeId}")
+    @GetMapping("/employee/{employeeId}")
     public EmployeeDTO getEmployee(@PathVariable long employeeId) {
         Employee employee = employeeFetchingService.invoke(employeeId);
         return employeeConverter.fromDomain(employee);
